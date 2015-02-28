@@ -3,15 +3,41 @@
 // that allows us to get information about the video player.
 
 ClippetyVideo = {
-  getCurrentVideoTime: function() {
-    var player = document.getElementById('movie_player');
-    var time = player.getCurrentTime()
-    return time
+  player: document.getElementById('movie_player'),
+  getCurrentTime: function() {
+    return this.player.getCurrentTime();
+  },
+  getDuration: function() {
+    return this.player.getDuration();
+  },
+  getUrl: function() {
+    return this.player.getVideoUrl();
+  },
+  getEmbedCode: function() {
+    return this.player.getVideoEmbedCode();
+  },
+  playVideo: function() {
+    this.player.playVideo();
+  },
+  pauseVideo: function() {
+    this.player.pauseVideo();
   }
 }
 
 document.addEventListener('getCurrentVideoTime', function(e) {
-  console.log("Get Current Video Time");
-  var currentTimeEvent = new CustomEvent("returnCurrentVideoTime", {"detail": ClippetyVideo.getCurrentVideoTime()});
-  document.dispatchEvent(currentTimeEvent);
+  var video = {
+    currentTime: ClippetyVideo.getCurrentTime(),
+    duration: ClippetyVideo.getDuration(),
+    url: ClippetyVideo.getUrl(),
+    embedCode: ClippetyVideo.getEmbedCode()
+  };
+  window.postMessage({type: 'currentVideoTime', text: ClippetyVideo.getCurrentTime(), video: video}, '*');
+});
+
+document.addEventListener('playVideo', function(e) {
+  ClippetyVideo.playVideo();
+});
+
+document.addEventListener('pauseVideo', function(e) {
+  ClippetyVideo.pauseVideo();
 });

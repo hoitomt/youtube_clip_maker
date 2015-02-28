@@ -1,5 +1,5 @@
 # YouTube Clip Maker
-Lets you record portions of YouTube videos
+Record portions of YouTube videos
 
 ## Roadmap
 Upcoming functionality

@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name":"Clippety Do Dah",
+  "name":"Youtube Clip Maker",
   "description": "Remember the old Excel macros where you could press record and it would record your actions? This is just like that, only for Youtube.",
   "version": "1.0",
   "background": {
@@ -16,7 +16,7 @@
   "content_scripts": [
     {
       "matches": ["*://*.youtube.com/*"],
-      "js":["jquery-2.1.3.min.js", "clipetty_content_script.js", "injector.js"]
+      "js":["vendor/jquery-2.1.3.min.js", "clipetty_content_script.js", "injector.js"]
     }
   ],
   "permissions": [
