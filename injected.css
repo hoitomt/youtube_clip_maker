@@ -3,6 +3,9 @@
   font-size: 13px;
   color: #000;
 }
+#player-controls .hidden {
+  display: none;
+}
 #player-controls #video-controls {
   display: inline-block;
   margin-right: 10px;
@@ -10,14 +13,9 @@
 #player-controls #time-controls {
   display: inline-block;
 }
-#player-controls .start-record,
-#player-controls .stop-record {
+#player-controls .record-controls {
   display: inline-block;
-  /*width: 50px;*/
-  padding: 3px;
-  border: solid 2px #000;
   margin-left: 20px;
-  border-radius: 10px;
 }
 #player-controls a {
   cursor: pointer;
@@ -47,3 +45,19 @@
   font-weight: bold;
   display: inline-block;
 }
+
+/*Icons*/
+.pause-btn, .record-btn {
+  background: url(http://d2ahh4xgp42dvp.cloudfront.net/color-icons/sprites/player-controls-48.png) no-repeat;
+  height: 48px;
+  width: 48px;
+}
+
+#player-controls .pause-btn {background-position: 0 -50px ;}
+#player-controls .pause-btn:hover {background-position: -50px -50px ;}
+#player-controls .pause-btn:active {background-position: -100px -50px ;}
+
+#player-controls .record-btn {background-position: 0 0 ;}
+#player-controls .record-btn:hover {background-position: -50px 0 ;}
+#player-controls .record-btn:active {background-position: -100px 0 ;}
+
