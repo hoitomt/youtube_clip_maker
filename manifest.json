@@ -24,5 +24,5 @@
     "activeTab",
     "https://ajax.googleapis.com/"
   ],
-  "web_accessible_resources": ["clippety_injected.js"]
+  "web_accessible_resources": ["images/*.png", "clippety_injected.js", "player_controls.html", "injected.css"]
 }

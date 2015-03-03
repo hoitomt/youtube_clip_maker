@@ -21,6 +21,21 @@ ClippetyVideo = {
   },
   pauseVideo: function() {
     this.player.pauseVideo();
+  },
+  addPlayerControls: function() {
+    var player = document.getElementById("player-api");
+    var playerControls = document.createElement("div");
+
+    playerControls.innerHTML = '<div><p>Player Controls</p></div>';
+
+    player.parentNode.insertBefore(playerControls, player);
+  }
+}
+
+function listenForVideoControlEvents() {
+  var startRecord = document.getElementById('start-record')
+  startRecord.onclick = function(e){
+    console.log("clickc");
   }
 }
 
@@ -41,3 +56,5 @@ document.addEventListener('playVideo', function(e) {
 document.addEventListener('pauseVideo', function(e) {
   ClippetyVideo.pauseVideo();
 });
+
+listenForVideoControlEvents();

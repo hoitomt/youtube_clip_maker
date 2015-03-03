@@ -10,8 +10,10 @@ var ClippetyExtension = {
   videoEmbedCode: null,
   videoDuration: null,
   init: function() {
+    $("#status").html("Welcome");
     this.listenForEvents();
     this.receiveRemoteVideoCurrentTime();
+    this.insertVideoControls();
   },
   listenForEvents: function() {
     _ = this;
@@ -86,10 +88,14 @@ var ClippetyExtension = {
       ClippetyExtension.setStatusMessage();
       ClippetyExtension.updateVideoMetrics(request.video);
     });
+  },
+  insertVideoControls: function() {
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+      chrome.tabs.sendMessage(tabs[0].id, {message: "insertPlayerControls"});
+    });
   }
 }
 
 $(function(){
-  $("#status").html("Init ClippetyExtension")
-  ClippetyExtension.init()
+  ClippetyExtension.init();
 });
