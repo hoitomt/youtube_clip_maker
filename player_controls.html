@@ -8,14 +8,16 @@
     </a>
   </div>
   <div id="time-controls">
-    <span class="time-label">Start Time:</span>
-    <span class="time-display"></span>
-    <a id="change-start-time-up" class="time-up" href="javascript:void(0);"><span></span></a>
-    <a id="change-start-time-down" class="time-down" href="javascript:void(0);"><span></span></a>
+    <a id="change-start-time-down" class="time-ctrl time-up" href="javascript:void(0);">(-) Start Earlier</a>
+    <a id="change-start-time-up" class="time-ctrl time-down" href="javascript:void(0);">(+) Start Later</a>
     <br />
-    <span class="time-label">Stop Time:</span>
-    <span class="time-display"></span>
-    <a id="change-stop-time-up" class="time-up" href="javascript:void(0);"><span></span></a>
-    <a id="change-stop-time-down" class="time-down" href="javascript:void(0);"><span></span></a>
+    <a id="change-stop-time-down" class="time-ctrl time-up" href="javascript:void(0);">(-) End Earlier</a>
+    <a id="change-stop-time-up" class="time-ctrl time-down" href="javascript:void(0);">(+) End Later</a>
+  </div>
+  <div id="video-clip-form">
+    <form>
+      <input type="text" class="text-input" name="video_clip_name">
+      <input type="submit" class="btn btn-success" value="Save">
+    </form>
   </div>
 </div>

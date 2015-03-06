@@ -14,6 +14,10 @@ var DummyPlayer = {
 var ClippetyVideo = {
   startRecord: document.getElementById('start-record'),
   pauseRecord: document.getElementById('stop-record'),
+  startEarlier: document.getElementById('change-start-time-down'),
+  startLater: document.getElementById('change-start-time-up'),
+  endEarlier: document.getElementById('change-stop-time-down'),
+  endLater: document.getElementById('change-stop-time-up'),
   increaseStartTime: document.getElementById('change-start-time-up'),
   decreaseStartTime: document.getElementById('change-start-time-down'),
   increaseStopTime: document.getElementById('change-stop-time-up'),
@@ -53,6 +57,29 @@ var ClippetyVideo = {
   },
   pauseVideo: function() {
     this.player().pauseVideo();
+  },
+  setCurrentTime: function(seekTime) {
+    this.player().seekTo(seekTime)
+  },
+  adjustCurrentTime: function(adjustAmount) {
+    currentTime = this.getCurrentTime();
+    this.setCurrentTime(currentTime + adjustAmount);
+  },
+  startVideoEarlier: function() {
+    this.videoClip.startTime = this.videoClip.startTime - 1
+    this.setCurrentTime(this.videoClip.startTime);
+  },
+  startVideoLater: function() {
+    this.videoClip.startTime = this.videoClip.startTime + 1
+    this.setCurrentTime(this.videoClip.startTime);
+  },
+  endVideoEarlier: function() {
+    this.videoClip.stopTime = this.videoClip.stopTime - 1
+    this.setCurrentTime(this.videoClip.stopTime);
+  },
+  endVideoLater: function() {
+    this.videoClip.stopTime = this.videoClip.stopTime + 1
+    this.setCurrentTime(this.videoClip.stopTime);
   },
   addPlayerControls: function() {
     var player = document.getElementById("player-api");
@@ -117,12 +144,23 @@ var ClippetyVideo = {
         _.startRecording();
       }
     };
-
     this.pauseRecord.onclick = function(e){
       if(_.videoClip.recording) {
         _.stopRecording();
       }
-    }
+    };
+    this.startEarlier.onclick = function(e){
+      _.startVideoEarlier();
+    };
+    this.startLater.onclick = function(e){
+      _.startVideoLater();
+    };
+    this.endEarlier.onclick = function(e){
+      _.endVideoEarlier();
+    };
+    this.endLater.onclick = function(e){
+      _.endVideoLater();
+    };
   }
 };
 
