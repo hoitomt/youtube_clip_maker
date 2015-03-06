@@ -3,96 +3,29 @@
 // The _injected code handles the state of the recording and persistence
 
 var ClippetyExtension = {
-  recording: false,
-  startTime: null,
-  stopTime: null,
-  videoUrl: null,
-  videoEmbedCode: null,
-  videoDuration: null,
   init: function() {
-    $("#status").html("Welcome");
-    this.listenForEvents();
-    this.receiveRemoteVideoCurrentTime();
-    this.insertVideoControls();
-  },
-  listenForEvents: function() {
     _ = this;
-    $("#toggle-recording").click(function(){
-      if(_.recording) {
-        $(this).html("Start Recording");
-        _.stopRecording();
-      } else {
-        $(this).html("Stop Recording");
-        _.startRecording();
-      }
+    $('#get-saved-videos').click(function() {
+      _.getLocalStorageValues();
     });
+    var videoClips = this.getLocalStorageValues();
   },
-  startRecording: function() {
-    _ = this
-    _.recording = true;
-    _.playVideo();
-    _.getRemoteVideoCurrentTime({message: "getCurrentVideoTime"});
+  readFromLocalStorage: function() {
   },
-  stopRecording: function() {
-    _ = this
-    _.recording = false;
-    _.pauseVideo();
-    _.getRemoteVideoCurrentTime({message: "getCurrentVideoTime"})
-  },
-  setStatusMessage: function() {
-    var msg = "";
-    if(this.recording) {
-      msg = "Recording...";
-    } else {
-      msg = "Not Recording";
-    }
-    $('#status').html(msg)
-  },
-  setStartTime: function(startTime) {
-    $('#start-time').html(startTime);
-    $('#stop-time').html(null);
-  },
-  setStopTime: function(stopTime) {
-    $('#stop-time').html(stopTime);
-  },
-  updateVideoMetrics: function(videoData) {
+  getLocalStorageValues: function() {
     _ = this;
-    _.videoUrl = videoData.url;
-    _.videoEmbedCode = videoData.embedCode;
-    _.videoDuration = videoData.duration;
-    if(_.recording) {
-      _.startTime = videoData.currentTime;
-      _.setStartTime(videoData.currentTime);
-    } else {
-      _.stopTime = videoData.currentTime;
-      _.setStopTime(videoData.currentTime);
-    }
-  },
-  getRemoteVideoCurrentTime: function(msgObj) {
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-      chrome.tabs.sendMessage(tabs[0].id, msgObj);
+      chrome.tabs.sendMessage(tabs[0].id, {message: "getLocalStorage"}, function(response) {
+        console.log(response.video_clips);
+        _.addClipsToDom(response.video_clips);
+      });
     });
   },
-  playVideo: function() {
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-      chrome.tabs.sendMessage(tabs[0].id, {message: "playVideo"});
-    });
-  },
-  pauseVideo: function() {
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-      chrome.tabs.sendMessage(tabs[0].id, {message: "pauseVideo"});
-    });
-  },
-  receiveRemoteVideoCurrentTime: function() {
-    chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-      ClippetyExtension.setStatusMessage();
-      ClippetyExtension.updateVideoMetrics(request.video);
-    });
-  },
-  insertVideoControls: function() {
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-      chrome.tabs.sendMessage(tabs[0].id, {message: "insertPlayerControls"});
-    });
+  addClipsToDom: function(videoClips) {
+    $.each(videoClips, function(i, videoClip){
+      var listItem = "<li>" + videoClip.url + ": " + videoClip.startTime + "</li>";
+      $('#saved-videos-list').append(listItem);
+    })
   }
 }
 

@@ -1,6 +1,21 @@
 // Content script
 // Marshals messages between _extension and _injected
 
+var LocalStorageReader = {
+  read: function() {
+    var videoClips = []
+    var localStorageKeys = Object.keys(localStorage)
+    for(var key in localStorageKeys) {
+      var videoClipKey = localStorageKeys[key]
+      if((/youtube_clips/).test(videoClipKey)){
+        var videoClip = localStorage.getItem(videoClipKey)
+        videoClips.push(JSON.parse(videoClip));
+      }
+    }
+    return videoClips;
+  }
+}
+
 var MessageMarshaler = {
   receiveMessageFromExtension: function() {
     chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
@@ -8,8 +23,12 @@ var MessageMarshaler = {
       if(!request || request.message == "") {
         return;
       }
-
-      MessageMarshaler.sendMessageToDom(request.message);
+      if(request.message == "getLocalStorage") {
+        var videoClips = LocalStorageReader.read();
+        sendResponse({video_clips: videoClips});
+      } else {
+        MessageMarshaler.sendMessageToDom(request.message);
+      }
     });
   },
   sendMessageToDom: function(message) {

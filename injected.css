@@ -1,8 +1,14 @@
 #player-controls {
+  background: #fff;
+  padding: 5px;
+  border: #d3d3d3 1px solid;
   font-family: arial, sans-serif;
   font-size: 13px;
   color: #000;
+  display: inline-block;
+  margin: 5px 0 0 0;
 }
+
 #player-controls .hidden {
   display: none;
 }
@@ -15,7 +21,6 @@
 }
 #player-controls .record-controls {
   display: inline-block;
-  margin-left: 20px;
 }
 #player-controls a {
   cursor: pointer;
@@ -48,7 +53,7 @@
 
 /*Icons*/
 .pause-btn, .record-btn {
-  background: url(http://d2ahh4xgp42dvp.cloudfront.net/color-icons/sprites/player-controls-48.png) no-repeat;
+  background: url(http://d2ahh4xgp42dvp.cloudfront.net/color-icons/sprites/player-controls-32.png) no-repeat;
   height: 48px;
   width: 48px;
 }
